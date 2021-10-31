@@ -6,8 +6,7 @@ describe('Validation tests', () => {
         const user = new User({ name: undefined });
         const validationResult = user.validateSync();
         const { message } = validationResult.errors.name;
-    
-        assert(message === 'Name is required.');
+        assert(message === 'Name is required');
     });
     
     it('requires a user name longer than 2 characters', () => {

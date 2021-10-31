@@ -1,3 +1,6 @@
+const assert = require('assert');
+const User = require('../src/user');
+
 describe('Reading Users out of database', () => {
     let joe;
 
