@@ -12,7 +12,11 @@ const UserSchema = new Schema({
         required: [true, 'Name is required']
     },
     posts: [PostSchema], 
-    likes: Number
+    likes: Number,
+    blogPost: [{
+        type: Schema.Types.ObjectId,
+        ref: 'blogPost'
+    }]
 });
 
 // note that use keyword function here, not using arrow function
@@ -20,6 +24,14 @@ const UserSchema = new Schema({
 UserSchema.virtual('postCount').get(function() {
     return this.posts.length;
 });
+
+UserSchema.pre('remove', function(next) {
+    // this === Joe
+    const BlogPost = mongoose.model('blogPost');
+    BlogPost.remove({ _id: { $in: this.blogPost }})
+        .then(() => next())
+        .catch(err => console.log(err));
+})
 
 const User = mongoose.model('User', UserSchema);
 

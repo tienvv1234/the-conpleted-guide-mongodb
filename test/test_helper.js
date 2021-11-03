@@ -8,13 +8,21 @@ before((done) => {
 })
 
 
-beforeEach((done) => {
+beforeEach(async (done) => {
 	// console.log(mongoose.connection.collection.users)
     // mongoose.connection.collection.users.drop(() => {
     //     done();
     // });
 
-	mongoose.connection.db.dropCollection('users', (err, result) => {
-		done();
-	})
+    const collections = await mongoose.connection.db.collections()
+      
+    for (let collection of collections) {
+      await collection.drop();
+    }
+    done();
+	// mongoose.connection.db.dropCollection('users', (err, result) => {
+	// 	done(); 
+	// });
+
+    // mongoose.connection.db.dropCollection('users')
 })

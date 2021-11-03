@@ -3,9 +3,13 @@ const Schema = mongoose.Schema;
 
 const BlogPostSchema = new Schema({
     title: String,
-	content: String
+	content: String,
+    comments: [{
+        type: Schema.Types.ObjectId,
+        ref: 'comment'
+    }],
 });
 
-// const Post = mongoose.model('Post', PostSchema);
+const BlogPost = mongoose.model('blogPost', BlogPostSchema);
 
-module.exports = BlogPostSchema;
+module.exports = BlogPost;
